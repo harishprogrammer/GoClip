@@ -23,7 +23,7 @@ class _SingleClipState extends State<SingleClip> {
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
       ),
       child: GestureDetector(
-        onTap: setclipdata,
+        onTap: ()=>{setclipdata(context)},
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -46,8 +46,14 @@ class _SingleClipState extends State<SingleClip> {
     );
   }
 
-  void setclipdata() async {
-    print(widget.model.clipText);
+  void setclipdata(BuildContext context) async {
     await Clipboard.setData(ClipboardData(text: widget.model.clipText));
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      const SnackBar(
+        content: Text('Text Copied'),        
+      ),
+    );
+
   }
 }
