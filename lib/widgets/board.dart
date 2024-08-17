@@ -15,16 +15,15 @@ class BoardScreen extends StatefulWidget {
 }
 
 class _BoardScreenState extends State<BoardScreen> {
-   final clipboardContentStream = StreamController<String>.broadcast();
-   Timer? clipboardTriggerTime;
+  final clipboardContentStream = StreamController<String>.broadcast();
+  Timer? clipboardTriggerTime;
 
-   Stream<String> get clipboardText => clipboardContentStream.stream;
+  Stream<String> get clipboardText => clipboardContentStream.stream;
 
-   @override
+  @override
   void initState() {
     super.initState();
     _startClipboardListener();
-    
   }
 
   void _startClipboardListener() {
@@ -32,9 +31,13 @@ class _BoardScreenState extends State<BoardScreen> {
       Clipboard.getData('text/plain').then((clipboardContent) {
         if (clipboardContent != null) {
           setState(() {
-            var newclip = ClipModel(clipText: clipboardContent.text!, isPinned: false ,creationDate :DateTime.now());
-            String lastClip = widget.clipList.isEmpty?'':widget.clipList.last.clipText;
-            if(lastClip != clipboardContent.text!){
+            var newclip = ClipModel(
+                clipText: clipboardContent.text!,
+                isPinned: false,
+                creationDate: DateTime.now());
+            String lastClip =
+                widget.clipList.isEmpty ? '' : widget.clipList.last.clipText;
+            if (lastClip != clipboardContent.text!) {
               widget.clipList.add(newclip);
             }
           });
@@ -49,7 +52,7 @@ class _BoardScreenState extends State<BoardScreen> {
     clipboardTriggerTime?.cancel();
     super.dispose();
   }
-    
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,9 +63,13 @@ class _BoardScreenState extends State<BoardScreen> {
           style: const TextStyle(fontSize: 20),
         ),
       ),
-      body: ClipCards(
-        clipsList: widget.clipList,
-      ),
+      body: Column(children: [
+        Expanded(
+          child: ClipCards(
+            clipsList: widget.clipList,
+          ),
+        ),
+      ]),
     );
   }
 }

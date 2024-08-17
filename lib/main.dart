@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:goclip/widgets/board.dart';
-import 'package:desktop_window/desktop_window.dart';
 
 void main() async {
   // await DesktopWindow.setMinWindowSize(const Size(350, 600));
